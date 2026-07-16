@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de horas extra 2026 | trabajadorestools.es</title>
+<meta name="description" content="Calcula gratis cuánto te deben pagar por tus horas extra según tu salario, jornada y convenio. Resultado inmediato, sin registro. Basada en el artículo 35 del Estatuto de los Trabajadores.">
+<link rel="canonical" href="https://trabajadorestools.es/">
+
+<!--
+  GA4: pega aquí el snippet de gtag.js cuando tengas el Measurement ID
+  (Google Analytics → Admin → Flujos de datos → Web → G-XXXXXXXXXX)
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:      #FAFAF9;
+    --surface: #FFFFFF;
+    --ink:     #15171B;
+    --ink-soft:#63676E;
+    --accent:  #E2A400;
+    --accent-deep:#8A5F00;
+    --panel:   #15171B;
+    --panel-2: #1E2126;
+    --line:    #E5E4DF;
+    --warn-wash:#FCEFD8;
+    --radius:  6px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    line-height:1.55;-webkit-font-smoothing:antialiased
+  }
+  .num{font-family:"Space Grotesk",sans-serif;font-variant-numeric:tabular-nums}
+
+  .page{max-width:600px;margin:0 auto;padding:48px 20px 64px}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  @media (prefers-reduced-motion: reduce){ .page > *{animation:none !important} }
+  .page > *{animation:fadeUp .4s ease-out both}
+  .page > *:nth-child(2){animation-delay:.03s}
+  .page > *:nth-child(3){animation-delay:.06s}
+
+  header{margin-bottom:28px}
+  .eyebrow{
+    font-size:12.5px;font-weight:600;color:var(--accent-deep);
+    letter-spacing:.02em;margin:0 0 10px
+  }
+  h1{
+    font-family:"Space Grotesk",sans-serif;font-weight:700;
+    font-size:clamp(26px,5.5vw,34px);line-height:1.15;letter-spacing:-.01em;
+    margin:0 0 10px;color:var(--ink)
+  }
+  .lede{color:var(--ink-soft);font-size:15.5px;margin:0;max-width:44ch}
+
+  /* ===== RESULTADO ===== */
+  .result{
+    background:var(--panel);border-radius:var(--radius);
+    border-top:3px solid var(--accent);
+    padding:26px 26px 22px;margin-bottom:16px
+  }
+  .rlabel{
+    font-family:"Space Grotesk",sans-serif;color:var(--accent);
+    font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+    font-weight:600;margin:0 0 10px
+  }
+  .rfig{
+    font-weight:700;font-size:clamp(34px,9.5vw,50px);line-height:1;
+    color:#fff;margin:0 0 8px
+  }
+  .rsub{color:#A2A6AB;font-size:13.5px;margin:0 0 20px}
+  .rbreak{
+    display:grid;grid-template-columns:1fr 1fr;gap:1px;
+    background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden
+  }
+  .rbreak > div{background:var(--panel-2);padding:12px 15px}
+  .rbreak .k{
+    font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;
+    color:#8B8F94;margin:0 0 4px
+  }
+  .rbreak .v{font-weight:600;font-size:16.5px;color:#fff;margin:0}
+
+  /* ===== FORMULARIO ===== */
+  .card{
+    background:var(--surface);border:1px solid var(--line);
+    border-radius:var(--radius);padding:24px 24px 22px;margin-bottom:16px
+  }
+  label{display:block;font-size:13.5px;font-weight:600;color:var(--ink);margin:0 0 7px}
+  .hint{display:block;font-weight:400;color:var(--ink-soft);font-size:12.5px;margin-top:2px}
+  .field{margin-bottom:18px}
+  .field:last-child{margin-bottom:0}
+  input[type="number"]{
+    width:100%;padding:11px 12px;font-size:16px;color:var(--ink);
+    background:var(--surface);border:1px solid var(--line);border-radius:4px;
+    font-family:"Space Grotesk",sans-serif;font-weight:500
+  }
+  input[type="number"]:focus{outline:2px solid var(--accent);outline-offset:0;border-color:var(--accent)}
+  input::placeholder{color:#B7B9BC}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:440px){.row{grid-template-columns:1fr}}
+
+  .tabs{display:flex;border-bottom:1px solid var(--line)}
+  .tabs input{position:absolute;opacity:0;pointer-events:none}
+  .tabs label{
+    flex:1;text-align:center;cursor:pointer;margin:0 0 -1px;
+    padding:9px 4px 10px;font-size:13px;font-weight:600;color:var(--ink-soft);
+    border-bottom:2px solid transparent;transition:.12s
+  }
+  .tabs label span{display:block;font-size:11px;font-weight:500;opacity:.75;margin-top:1px}
+  .tabs input:checked + label{color:var(--ink);border-bottom-color:var(--accent)}
+  .tabs input:focus-visible + label{outline:2px solid var(--accent);outline-offset:-2px}
+
+  .note{
+    border-left:3px solid var(--accent-deep);background:var(--warn-wash);
+    border-radius:0 4px 4px 0;padding:12px 15px;font-size:13px;
+    color:var(--accent-deep);margin-top:18px
+  }
+  .note strong{color:#5C3E00}
+
+  /* ===== CONTENIDO ===== */
+  h2{font-family:"Space Grotesk",sans-serif;font-size:19px;margin:36px 0 10px;font-weight:600}
+  .prose{color:var(--ink-soft);font-size:15px}
+  .prose p{margin:0 0 12px}
+  footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-soft)}
+  footer p{margin:0 0 6px}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <p class="eyebrow">trabajadorestools.es</p>
+    <h1>Calculadora de horas extra</h1>
+    <p class="lede">Indica tu salario y las horas que has hecho de más. Calculamos cuánto te corresponde cobrar, al momento.</p>
+  </header>
+
+  <section class="result" aria-live="polite">
+    <p class="rlabel">Total estimado</p>
+    <p class="rfig num" id="rTotal">—,— €</p>
+    <p class="rsub" id="rSub">Rellena el formulario para ver tu importe</p>
+    <div class="rbreak">
+      <div><p class="k">Hora ordinaria</p><p class="v num" id="rOrd">—</p></div>
+      <div><p class="k">Hora extra</p><p class="v num" id="rExtra">—</p></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="field">
+      <label for="bruto">Salario bruto anual (€)
+        <span class="hint">el total del año, con pagas extra incluidas</span>
+      </label>
+      <input type="number" id="bruto" inputmode="decimal" min="0" step="100" placeholder="21000">
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label for="jornada">Jornada semanal (h)</label>
+        <input type="number" id="jornada" inputmode="decimal" min="1" max="60" step="0.5" value="40">
+      </div>
+      <div class="field">
+        <label for="horas">Horas extra hechas</label>
+        <input type="number" id="horas" inputmode="decimal" min="0" step="0.5" placeholder="10">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Recargo sobre la hora extra
+        <span class="hint">lo fija tu convenio, no la ley</span>
+      </label>
+      <div class="tabs" role="radiogroup" aria-label="Recargo aplicado">
+        <input type="radio" name="recargo" id="r0" value="0" checked>
+        <label for="r0">Mínimo<span>+0%</span></label>
+        <input type="radio" name="recargo" id="r25" value="25">
+        <label for="r25">Convenio<span>+25%</span></label>
+        <input type="radio" name="recargo" id="r50" value="50">
+        <label for="r50">Convenio<span>+50%</span></label>
+        <input type="radio" name="recargo" id="r75" value="75">
+        <label for="r75">Festivo<span>+75%</span></label>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>Importante:</strong> el Estatuto de los Trabajadores solo obliga a que la hora extra no valga menos que la ordinaria. El recargo (+25%, +50%, +75%&hellip;) lo decide tu <strong>convenio colectivo</strong>, no esta calculadora. Consúltalo para elegir el porcentaje correcto.
+    </div>
+  </section>
+
+  <h2>Cómo se calcula tu hora extra</h2>
+  <div class="prose">
+    <p>Partimos del <strong>valor de tu hora ordinaria</strong>: tu salario bruto anual dividido entre las horas que trabajas al año. Con una jornada de 40&nbsp;h semanales, usamos <strong>jornada × 52</strong> como estimación estándar del total anual. Tu convenio puede fijar una jornada anual distinta —con más vacaciones o festivos descontados— lo que cambiaría ligeramente el resultado.</p>
+    <p>Sobre ese valor se aplica el recargo. La ley marca un suelo —la hora extra nunca puede pagarse por debajo de la ordinaria— pero el porcentaje concreto lo pactan el convenio o tu contrato. Si no sabes el tuyo, empieza por el mínimo legal y contrasta con tu convenio antes de reclamar nada.</p>
+    <p>Dos límites a recordar del art. 35: no puedes hacer más de <strong>80 horas extra al año</strong> (salvo fuerza mayor), y si no se pagan, deben compensarse con descanso equivalente dentro de los 4 meses siguientes.</p>
+  </div>
+
+  <footer>
+    <p>Herramienta orientativa. No sustituye el asesoramiento de un profesional ni la consulta de tu convenio colectivo. Basada en el artículo 35 del Estatuto de los Trabajadores (texto vigente 2026).</p>
+    <p>No almacenamos ningún dato: el cálculo se hace en tu navegador.</p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var el = {
+    bruto:   document.getElementById("bruto"),
+    jornada: document.getElementById("jornada"),
+    horas:   document.getElementById("horas"),
+    rTotal:  document.getElementById("rTotal"),
+    rSub:    document.getElementById("rSub"),
+    rOrd:    document.getElementById("rOrd"),
+    rExtra:  document.getElementById("rExtra")
+  };
+
+  function euro(n){
+    if(!isFinite(n)) return "—";
+    var fixed = n.toFixed(2);
+    var parts = fixed.split(".");
+    var intp  = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    return intp + "," + parts[1] + " €";
+  }
+
+  function getRecargo(){
+    var checked = document.querySelector('input[name="recargo"]:checked');
+    return checked ? parseFloat(checked.value) : 0;
+  }
+
+  function reset(msg){
+    el.rTotal.textContent = "—,— €";
+    el.rOrd.textContent   = "—";
+    el.rExtra.textContent = "—";
+    el.rSub.textContent   = msg;
+  }
+
+  function calc(){
+    var bruto   = parseFloat(el.bruto.value);
+    var jornada = parseFloat(el.jornada.value);
+    var horas   = parseFloat(el.horas.value);
+    var recargo = getRecargo();
+
+    if(!(bruto > 0) || !(jornada > 0)){
+      reset("Rellena el formulario para ver tu importe");
+      return;
+    }
+
+    var horasAnuales = jornada * 52;
+    var valorOrd = bruto / horasAnuales;
+    var valorExtra = valorOrd * (1 + recargo/100);
+
+    el.rOrd.textContent   = euro(valorOrd) + "/h";
+    el.rExtra.textContent = euro(valorExtra) + "/h";
+
+    if(!(horas > 0)){
+      el.rTotal.textContent = euro(valorExtra) + "/h";
+      el.rSub.textContent = "Valor por hora extra con +" + recargo + "% de recargo. Indica cuántas has hecho para el total.";
+      return;
+    }
+
+    var total = valorExtra * horas;
+    el.rTotal.textContent = euro(total);
+
+    var aviso = horas > 80 ? " · Ojo: superas el máximo legal de 80 h/año" : "";
+    el.rSub.textContent = horas + " h extra × " + euro(valorExtra) + " (recargo +" + recargo + "%)" + aviso;
+  }
+
+  ["bruto","jornada","horas"].forEach(function(id){
+    document.getElementById(id).addEventListener("input", calc);
+  });
+  document.querySelectorAll('input[name="recargo"]').forEach(function(r){
+    r.addEventListener("change", calc);
+  });
+})();
+</script>
+</body>
+</html>
